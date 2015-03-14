@@ -1,0 +1,97 @@
+<br>
+<form class="navbar-form" role="search" ng-init="advancedSearch=false">
+    <div class="input-group">
+
+        <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.$" ng-change="updateFilteredList()"
+               placeholder="Search here...">
+
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" ng-click="advancedSearch=!advancedSearch">Advanced Search <span
+            class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-primary" ng-csv="filteredList" csv-header="['Test Name', 'Sample Requirements', 'Reference Range','Availability Notes']" filename="Medical_Tests.csv">Export to CSV<span class="glyphicon glyphicon-download-alt"
+                                                                     aria-hidden="true"></span></button>
+
+    <select ng-model="config.itemsPerPage" class="form-control ng-pristine ng-valid">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+    </select>
+    <i>TestsPerPage</i>
+</form>
+<br>
+<div class="panel panel-primary" ng-show="advancedSearch">
+    <div class="panel-heading">
+        <h3 class="panel-title">Advanced Search</h3>
+    </div>
+    <form class="navbar-form" role="search">
+
+        <div class="input-group">
+            <label>Test Name</label>
+            <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.testName"
+                   ng-change="updateFilteredList()" placeholder="Search here...">
+        </div>
+        <div class="input-group">
+            <label>Sample Requirements</label>
+            <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.samleRequirements"
+                   ng-change="updateFilteredList()" placeholder="Search here...">
+        </div>
+        <div class="input-group">
+            <label>Reference Range</label>
+            <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.referenceRange"
+                   ng-change="updateFilteredList()" placeholder="Search here...">
+        </div>
+        <div class="input-group">
+            <label>Availability Notes</label>
+            <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.availabilityNotes"
+                   ng-change="updateFilteredList()" placeholder="Search here...">
+        </div>
+        <div class="input-group">
+            <label>Laboratory</label>
+            <select ng-model="query.Laboratory" class="form-control ng-pristine ng-valid" ng-change="updateFilteredList()" >
+                <option value="">All</option>
+                <option value="Biochemistry">Biochemistry</option>
+                <option value="Immunology">Immunology</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>Cost</label>
+            <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.cost"
+                   ng-change="updateFilteredList()" placeholder="Search here...">
+        </div>
+    </form>
+
+</div>
+
+
+<table class="table table-striped" at-table at-paginated at-list="filteredList" at-config="config">
+    <thead>
+    <tr>
+        <th at-attribute="testName">Test Name</th>
+        <th at-attribute="samleRequirements">Sample Requirements</th>
+        <th at-attribute="referenceRange">Reference Range</th>
+        <th at-attribute="availabilityNotes">Availability Notes</th>
+        <th at-attribute="Laboratory">Laboratory</th>
+        <th at-attribute="Cost">Cost</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td at-implicit at-attribute="testName"  at-initial-sorting="asc"></td>
+        <td at-implicit at-attribute="samleRequirements" ></td>
+        <td at-attribute="referenceRange" >
+            <ul>
+                <li ng-repeat="range in splitString(item.referenceRange)">{{range}}</li>
+            </ul>
+        </td>
+        <td at-implicit at-attribute="availabilityNotes"></td>
+        <td at-implicit at-attribute="Laboratory"></td>
+        <td at-implicit at-attribute="cost">£</td>
+    </tr>
+    </tbody>
+</table>
+<at-pagination at-list="filteredList" at-config="config"></at-pagination>
