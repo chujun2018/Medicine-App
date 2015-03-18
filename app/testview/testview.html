@@ -56,11 +56,31 @@
                 <option value="">All</option>
                 <option value="Biochemistry">Biochemistry</option>
                 <option value="Immunology">Immunology</option>
+                <option value="Blood Transfusion">Blood Transfusion</option>
+                <option value="Haematology">Haematology</option>
+                <option value="Haematology/ HMDS, St James University Hospital">Haematology/ HMDS, St James University Hospital</option>
+                <option value="Haematology/ Imperial College Molecular Pathology Laboratory">Haematology/ Imperial College Molecular Pathology Laboratory</option>
+                <option value="Haematology/ Leeds Royal Infirmary">Haematology/ Leeds Royal Infirmary</option>
+                <option value="Haematology/ Paediatric Malignancy Unit GOSH">Haematology/ Paediatric Malignancy Unit GOSH</option>
+                <option value="Haematology/ Wessex Regional Genetics Laboratory">Haematology/ Wessex Regional Genetics Laboratory</option>
+                <option value="Haemotology">Haemotology</option>
+                <option value="Microbiology">Microbiology</option>
+                <option value="Neurogenetics Laboratory">Neurogenetics Laboratory</option>
+                <option value="Red Cell Immunogenetics Department">Red Cell Immunogenetics Department</option>
+                <option value="Red Cell Immunohaematology Department">Red Cell Immunohaematology Department</option>
+                <option value="Haemotology">Haemotology</option>
+                <option value="Virology">Virology</option>
+
             </select>
         </div>
         <div class="input-group">
             <label>Cost</label>
-            <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.cost"
+            <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.Cost"
+                   ng-change="updateFilteredList()" placeholder="Search here...">
+        </div>
+        <div class="input-group">
+            <label>TurnaroundTime</label>
+            <input type="text" class="form-control ng-pristine ng-valid" ng-model="query.TurnaroundTime"
                    ng-change="updateFilteredList()" placeholder="Search here...">
         </div>
     </form>
@@ -77,6 +97,7 @@
         <th at-attribute="availabilityNotes">Availability Notes</th>
         <th at-attribute="Laboratory">Laboratory</th>
         <th at-attribute="Cost">Cost</th>
+
     </tr>
     </thead>
     <tbody>
@@ -88,9 +109,14 @@
                 <li ng-repeat="range in splitString(item.referenceRange)">{{range}}</li>
             </ul>
         </td>
-        <td at-implicit at-attribute="availabilityNotes"></td>
+        <td at-attribute="availabilityNotes">
+            <ul>
+                <li ng-repeat="notes in splitString(item.availabilityNotes)">{{notes}}</li>
+            </ul>
+        </td>
         <td at-implicit at-attribute="Laboratory"></td>
-        <td at-implicit at-attribute="cost">£</td>
+        <td at-implicit at-attribute="Cost"></td>
+        <td at-implicit at-attribute="turnaroundTime"></td>
     </tr>
     </tbody>
 </table>
