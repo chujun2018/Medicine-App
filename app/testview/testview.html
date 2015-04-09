@@ -11,15 +11,18 @@
     </div>
     <button type="submit" class="btn btn-primary" ng-click="advancedSearch=!advancedSearch">Advanced Search <span
             class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>
-    <button type="button" class="btn btn-primary" ng-csv="filteredList" csv-header="['Test Name', 'Sample Requirements', 'Reference Range','Availability Notes']" filename="Medical_Tests.csv">Export to CSV<span class="glyphicon glyphicon-download-alt"
-                                                                     aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-primary" ng-csv="filteredList"
+            csv-header="['Test Name', 'Sample Requirements', 'Reference Range','Availability Notes']"
+            filename="Medical_Tests.csv">Export to CSV<span class="glyphicon glyphicon-download-alt"
+                                                            aria-hidden="true"></span></button>
 
     <select ng-model="config.itemsPerPage" class="form-control ng-pristine ng-valid">
-        <option value="5">5</option>
         <option value="10">10</option>
-        <option value="15">15</option>
         <option value="20">20</option>
-        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="250">250</option>
+        <option value="1000">All</option>
     </select>
     <i>TestsPerPage</i>
 </form>
@@ -52,25 +55,18 @@
         </div>
         <div class="input-group">
             <label>Laboratory</label>
-            <select ng-model="query.Laboratory" class="form-control ng-pristine ng-valid" ng-change="updateFilteredList()" >
+            <select ng-model="query.Laboratory" class="form-control ng-pristine ng-valid"
+                    ng-change="updateFilteredList()">
                 <option value="">All</option>
                 <option value="Biochemistry">Biochemistry</option>
-                <option value="Immunology">Immunology</option>
                 <option value="Blood Transfusion">Blood Transfusion</option>
-                <option value="Haematology">Haematology</option>
-                <option value="Haematology/ HMDS, St James University Hospital">Haematology/ HMDS, St James University Hospital</option>
-                <option value="Haematology/ Imperial College Molecular Pathology Laboratory">Haematology/ Imperial College Molecular Pathology Laboratory</option>
-                <option value="Haematology/ Leeds Royal Infirmary">Haematology/ Leeds Royal Infirmary</option>
-                <option value="Haematology/ Paediatric Malignancy Unit GOSH">Haematology/ Paediatric Malignancy Unit GOSH</option>
-                <option value="Haematology/ Wessex Regional Genetics Laboratory">Haematology/ Wessex Regional Genetics Laboratory</option>
-                <option value="Haemotology">Haemotology</option>
+                <option value="Immunology">Immunology</option>
+                <option value="Haematology">Haematology (all)</option>
                 <option value="Microbiology">Microbiology</option>
                 <option value="Neurogenetics Laboratory">Neurogenetics Laboratory</option>
-                <option value="Red Cell Immunogenetics Department">Red Cell Immunogenetics Department</option>
-                <option value="Red Cell Immunohaematology Department">Red Cell Immunohaematology Department</option>
-                <option value="Haemotology">Haemotology</option>
                 <option value="Parasitology">Parasitology</option>
-                <option value="Neurogenetics Laboratory">Neurogenetics Laboratory</option>
+                <option value="Red Cell Immunohaematology Department">Red Cell Immunohaematology Department</option>
+                <option value="Red Cell Immunogenetics Department">Red Cell Immunogenetics Department</option>
 
             </select>
         </div>
@@ -103,21 +99,31 @@
     </thead>
     <tbody>
     <tr>
-        <td at-implicit at-attribute="testName"  at-initial-sorting="asc"></td>
-        <td at-implicit at-attribute="samleRequirements" ></td>
-        <td at-attribute="referenceRange" >
-            <ul>
-                <li ng-repeat="range in splitString(item.referenceRange)">{{range}}</li>
-            </ul>
+        <td at-implicit at-attribute="testName" at-initial-sorting="asc"></td>
+        <td at-attribute="samleRequirements">
+
+                <div class="extra-space" ng-repeat="sample in splitString(item.samleRequirements)">{{sample}}</div>
+
+        </td>
+
+        <td at-attribute="referenceRange">
+
+                <div class="extra-space" ng-repeat="range in splitString(item.referenceRange)">{{range}}</div>
+
         </td>
         <td at-attribute="availabilityNotes">
-            <ul>
-                <li ng-repeat="notes in splitString(item.availabilityNotes)">{{notes}}</li>
-            </ul>
+                <div class="extra-space" ng-repeat="notes in splitString(item.availabilityNotes)">{{notes}}</div>
         </td>
         <td at-implicit at-attribute="Laboratory"></td>
-        <td at-implicit at-attribute="Cost"></td>
-        <td at-implicit at-attribute="turnaroundTime"></td>
+        <td at-attribute="Cost">
+
+                <div class="extra-space" ng-repeat="co in splitString(item.Cost)">{{co}}</div>
+        </td>
+        <td at-attribute="turnaroundTime">
+
+                <div class="extra-space" ng-repeat="turn in splitString(item.turnaroundTime)">{{turn}}</div>
+
+        </td>
     </tr>
     </tbody>
 </table>
